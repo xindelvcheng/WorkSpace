@@ -1,0 +1,258 @@
+
+
+MongoDB的层级为 database -->collection --> document
+
+安装MongoDB，启动mongo服务
+
+PyMongo模块是Python对MongoDB操作的接口包，主要实现对MongoDB的几种操作：增删改查以及排序等功能
+
+安装Python的mongo模块
+
+pip install pymongo
+
+安装完后查看
+
+pip list
+
+
+
+模块引用
+
+import pymongo
+
+建立连接
+
+import
+ pymongo
+
+from
+ pymongo 
+import
+ MongoClient
+client 
+= MongoClient(
+'
+localhost
+'
+,27017
+)
+
+#
+client = MongoClient('mongodb://localhost:27017')
+
+访问数据库
+
+当前所使用的数据库test的users
+
+
+
+ 
+
+db =
+ client.test
+users 
+=
+ db.users
+
+#
+或者db = client['users']，或一步完成：db["test"]["users"]
+
+插入文档
+
+文档就是一行，集合就是一个表
+
+一个insert_one()
+
+user1 = {
+"
+name
+"
+:
+"
+li8
+"
+,
+"
+age
+"
+:8
+}
+rs 
+=
+ users.insert_one(user1)
+
+print
+(
+'
+one insert:{0}
+'
+.format(rs.inserted_id))
+
+
+
+多个 insert_many()
+
+user2 = {
+"
+name
+"
+:
+"
+li9
+"
+,
+"
+age
+"
+:9
+}
+user3 
+= {
+"
+name
+"
+:
+"
+li10
+"
+,
+"
+age
+"
+:10
+}
+user4 
+= {
+"
+name
+"
+:
+"
+li11
+"
+,
+"
+age
+"
+:11
+}
+user5 
+= {
+"
+name
+"
+:
+"
+li12
+"
+,
+"
+age
+"
+:12
+}
+new_result 
+=
+ users.insert_many([user2, user3, user4, user5])
+
+print
+(
+'
+Multiple users: {0}
+'
+.format(new_result.inserted_ids))
+
+
+
+
+检索文档
+
+一个find_one()
+
+usertmp = users.find_one({
+"
+age
+"
+:33
+})
+
+print
+(usertmp)
+
+
+
+多个find()
+
+rs = users.find({
+'
+age
+'
+: 33
+})
+
+for
+ tmp 
+in
+ rs:
+    
+print
+(tmp)
+
+
+
+高级查询
+
+rs = users.find({
+'
+age
+'
+:{
+"
+$lt
+"
+:30}}).sort(
+"
+name
+"
+)
+
+for
+ tmp 
+in
+ rs:
+    
+print
+(tmp)
+
+
+
+统计数量
+
+print
+(users.count())
+
+加索引
+
+from
+ pymongo 
+import
+ ASCENDING, DESCENDING
+
+print
+(users.create_index([(
+"
+age
+"
+, DESCENDING), (
+"
+name
+"
+, ASCENDING)]))
+
+
+
+ 数据导出
+
+mongoexport -d test -c users --csv -f name,age  -o e:\python\users.csv
+
+ 

@@ -1,0 +1,14 @@
+inoremap jj <ESC>
+set number
+set ts=4
+set expandtab
+set tabstop=4
+set softtabstop=4
+set shiftwidth=4
+set autoindent
+set cindent
+set cinoptions={0,1s,t0,n-2,p2s,(03s,=.5s,>1s,=1s,:1s
+set nu
+set ruler
+set hlsearch
+set backspace=2
