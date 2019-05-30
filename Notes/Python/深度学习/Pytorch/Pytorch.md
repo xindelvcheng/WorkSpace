@@ -113,9 +113,22 @@ img,label = next(iter(train_set))
 ## 循环神经网络
 ### 1.API
 
-使用`self.rnn	=	nn.LSTM(input_size,	hidden_size,	num_layers) `定义，普通层一样使用，Pytorch会自动迭代，返回值为` output, (hn, cn) = rnn(input, (h0, c0))`
+#### LSTM
 
-**需要注意的是RNN的输入数据`X`格式为[T,batch_size,input_feature]**，即序列的长度，批次大小，输入特征维度
+##### Define:
+
+```python
+self.lstm = torch.nn.LSTM(input_size,hidden_size,num_layers,batch_first=True)
+self.lstm = torch.nn.LSTM(input_size, hidden_size, num_layers, batch_first=True, bidirectional=True) # BiRNN
+```
+
+##### Outputs:
+
+```python
+# "y" is the output tensor of shape(batch_size,sequence_length,hidden_size*num_direction)
+# "h0"、"c0" are all output tensors of shape(num_layers*num_direction,batch_size,hidden_size)
+y,(h0,c0) = self.lstm(x,(h0,c0)) 
+```
 
 
 ### 2.词嵌入矩阵
@@ -128,7 +141,26 @@ single_word_embedding = embeds(torch.LongTensor([50])) # 取序号为50的单词
 
 ## GPU加速
 
-### 报错
+### 1. 使用
+
+#### 兼容写法
+
+```python
+device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+model.to(device)
+tensor.to(device)
+```
+
+#### 测试的简易写法
+
+```python
+model.cuda() # <-> model.cpu()
+tensor.cuda()
+```
+
+
+
+### 2. 报错
 
 1. `RuntimeError: reduce failed to synchronize: device-side assert triggered`这种CUDA通用错误没有什么用，将设备改成CPU查看错误。
 2. `CUDA error: device-side assert triggered`，重新运行所有代码

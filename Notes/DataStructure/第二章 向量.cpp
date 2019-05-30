@@ -4,22 +4,34 @@ using namespace std;
 
 typedef int Rank;
 #define DEFAULT_CAPACITY 3
-template <typename T> class Vector {
-	private Rank _size; int _capacity; T* _elem;
+
+
+template <typename T> class Vector
+{
+private:
+	Rank _size;int _capacity;T* _elem;
+    void copyFrom(T* const A,Rank lo,Rank hi);
+    void expand();
 public:
-	Vector(int c = DEFAULT_CAPACITY) {
-		_elem = new T[_capacity = c];
-		_size = 0;
-	}
-	void copyFrom(T* const A, Rank lo, Rank hi);
+	Vector(int c = DEFAULT_CAPACITY);
+	~Vector();
 	T& operator[](Rank r)const { return _elem };
 
 	Rank insert(Rank r, T const& e);
 	int remove(Rank lo, Rank hi);
 	int remove(Rank r);
-private:
-	void expand();
 };
+
+Vector::Vector(int c = DEFAULT_CAPACITY)
+{
+    _elem = new T[_capacity=c];
+    _size = 0;
+}
+
+Vector::~Vector()
+{
+}
+
 
 //将数组A从lo到hi的区间的元素拷贝给Vector
 template <typename T>
@@ -88,3 +100,5 @@ int main() {
 	cout << "Hello!" << endl;
 	system("pause");
 }
+
+

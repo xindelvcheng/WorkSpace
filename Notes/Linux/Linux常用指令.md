@@ -69,12 +69,20 @@ create database ihome default charset=utf8；
 df -h
 ```
 ### 2.查看目录大小
+
+#### 查看/etc目录总大小
+
 ```bash
-查看/etc目录总大小
 $ du -sh /etc
+```
 查看/etc下所有目录大小
+
+```bash
 $ du -h /etc 
 ```
+
+
+
 ### 挂载命令
 
 
