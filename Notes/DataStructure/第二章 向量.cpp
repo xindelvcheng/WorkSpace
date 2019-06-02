@@ -96,6 +96,33 @@ Rank Vector<T>::find(T const&e,Rank lo,Rank hi)const
 	return hi; //如果成功返回的是命中的元素下标，否则返回的是lo-1(lo<hi表示失败)
 }
 
+template <typename T>
+int Vector<T>::deduplicate(){//繁琐版 O(n^2)
+	int oldSize = _size;
+	int i = 1;
+	while(i < _size){
+		(find(_elem[i],0,i) < 0) ? i++ :remove(i);
+	}
+	return oldSize - _size;
+}
+
+//遍历
+template <typename T> template <typename VST>
+void Vector<T>::traverse(VST& visit)//函数对象
+{
+	for(int i = 0;i < _size;i++)visit(_elem[i]);
+}
+template <typename T>
+struct Increase{//函数对象：通过重载操作符"()"实现
+	virtual void operator()(T &e){ e++; }
+}
+template <typename T>
+void increase(Vector<T> & V){
+	V.traverse(Increase <T>());
+}
+
+
+
 int main() {
 	cout << "Hello!" << endl;
 	system("pause");
