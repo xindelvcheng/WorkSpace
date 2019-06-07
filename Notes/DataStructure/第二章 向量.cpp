@@ -15,21 +15,24 @@ private:
 public:
 	Vector(int c = DEFAULT_CAPACITY);
 	~Vector();
-	T& operator[](Rank r)const { return _elem };
+	T& operator[](Rank r)const { return _elem[r] };
 
 	Rank insert(Rank r, T const& e);
 	int remove(Rank lo, Rank hi);
 	int remove(Rank r);
 };
 
-Vector::Vector(int c = DEFAULT_CAPACITY)
+template <typename T>
+Vector<T>::Vector(int c = DEFAULT_CAPACITY)
 {
     _elem = new T[_capacity=c];
     _size = 0;
 }
 
-Vector::~Vector()
+template <typename T>
+Vector<T>::~Vector()
 {
+	delete [] _elem;
 }
 
 
@@ -120,7 +123,7 @@ template <typename T>
 void increase(Vector<T> & V){
 	V.traverse(Increase <T>());
 }
-
+//原理和python中类重写__call__方法类似
 
 
 int main() {
