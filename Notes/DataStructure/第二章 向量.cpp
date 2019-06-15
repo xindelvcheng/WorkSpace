@@ -15,13 +15,14 @@ private:
 public:
 	Vector(int c = DEFAULT_CAPACITY);
 	~Vector();
-	T& operator[](Rank r)const { return _elem };
+	T& operator[](Rank r)const { return _elem[r] };
 
 	Rank insert(Rank r, T const& e);
 	int remove(Rank lo, Rank hi);
 	int remove(Rank r);
 };
 
+template <typename T>
 Vector::Vector(int c = DEFAULT_CAPACITY)
 {
     _elem = new T[_capacity=c];
