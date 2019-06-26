@@ -27,6 +27,8 @@ $ wget https://raw.githubusercontent.com/Neo-Oli/termux-ubuntu/master/ubuntu.sh
 $ bash ubuntu.sh
 ```
 
+安装后记得`apt update && apt upgrade`
+
 ### 2. Arch
 
 ```bash
