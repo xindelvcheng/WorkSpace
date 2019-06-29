@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 #include <iostream>
+=======
+#include<iostream>
+>>>>>>> ab1b7cfb54b611b3e4530d51cdd44f31a4b80ea8
 using namespace std;
 
 typedef int Rank;
@@ -8,11 +12,16 @@ template <typename T>class Vector
 {
 private:
     Rank _size;int _capacity;T* _elem;
+<<<<<<< HEAD
     void copyFrom(T* const A,Rank lo,Rank hi);
+=======
+    void copyFrom(T* const,Rank lo,Rank hi);
+>>>>>>> ab1b7cfb54b611b3e4530d51cdd44f31a4b80ea8
     void expand();
 public:
     Vector(int c = DEFAULT_CAPACITY);
     ~Vector();
+<<<<<<< HEAD
     T& operator[](Rank r)const{return _elem[r]};
 
     Rank insert(Rank r,T const&e);
@@ -105,3 +114,7 @@ void increase(Vector<T> &V){
     V.traverse(Increase<T>());
 }
 //原理和python中重写__call__方法类似
+=======
+    T& operator[](Rank r)const {return _elem};
+}
+>>>>>>> ab1b7cfb54b611b3e4530d51cdd44f31a4b80ea8

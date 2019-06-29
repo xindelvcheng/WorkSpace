@@ -23,7 +23,11 @@ public:
 };
 
 template <typename T>
+<<<<<<< HEAD
 Vector<T>::Vector(int c = DEFAULT_CAPACITY)
+=======
+Vector::Vector(int c = DEFAULT_CAPACITY)
+>>>>>>> 47cf78356496a7c0339e05cd971b22cd0f070988
 {
     _elem = new T[_capacity=c];
     _size = 0;
