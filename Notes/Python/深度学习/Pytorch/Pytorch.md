@@ -4,13 +4,24 @@
 
 ### 1. 变量
 
+#### (1).创建
+
+- torch.randn(row,col,hi,...) 生成指定形状使用标准正态分布初始化的Tensor
+- torch.zeros(row,col,hi,...) 生成全为0的指定形状的Tensor
+
+#### (2).变量类型
+
 Tensor，Variable，Parameter
 
 - Pytorch中Tensor和numpy中ndarry的使用方式类似，可以通过`from_numpy()`和`.numpy()x`相互转换。
-
 - Variable是Tensor的封装，包含`.data`：内部的Tensor，`.grad`：梯度，`.grad_fn`：得到的途径
-
 - Parameter是Varible的封装，默认requires_grad=True
+
+> 这些乱七八糟的东西没用，Variable和Tensor已经合并了，没有Variable了。
+
+#### (3).获取Tensor中的值
+
+- Tensor.item() 和numpy中的方式一样
 
 ### 2. 自动求导
 
@@ -21,7 +32,7 @@ Tensor，Variable，Parameter
 #### Sequential
 
 ```python
-seq_net    =    nn.Sequential(
+seq_net = nn.Sequential(
     nn.Linear(2,4),
     nn.Tanh(),
     nn.Linear(4,1)
@@ -32,23 +43,26 @@ seq_net    =    nn.Sequential(
 
 ```python
 class module_net(nn.Module):
-    def __init__(self,    num_input,    num_hidden,    num_output):
-        super(module_net,    self).__init__()
-        self.layer1    = nn.Linear(num_input,    num_hidden)
-        self.layer2    = nn.Tanh()
-        self.layer3    = nn.Linear(num_hidden,    num_output)
+    def __init__(self, num_input, num_hidden, num_output):
+        super(module_net, self).__init__()
+        self.layer1 = nn.Linear(num_input, num_hidden)
+        self.layer2 = nn.Tanh()
+        self.layer3 = nn.Linear(num_hidden, num_output)
  
     def forward(self, x):
         x = self.layer1(x)
-        x =    self.layer2(x)
-        x =    self.layer3(x)
+        x = self.layer2(x)
+        x = self.layer3(x)
         return x
 ```
 
 ### 4. 损失函数
 
+使用函数指针
+
 ```python
 criterion = nn.BCEWithLogitsLoss()
+criterion = nn.CrossEntropyLoss()
 ```
 
 ### 5. 优化器
@@ -62,13 +76,13 @@ optimizer = torch.optim.Adam(net.parameters(),lr=1e-3) #使用自适应优化算
 
 ```python
 for e in range(10000):
-    out    = net(Variable(x))
-    loss = criterion(out, Variable(y))
+    out = net(x)
+    loss = criterion(out, y)
     optimizer.zero_grad()
     loss.backward()
     optimizer.step()
-    if    (e + 1)    % 1000    ==    0:
-        print('epoch:    {},    loss:    {}'.format(e+1,    loss.data[0]))
+    if (e + 1) % 1000 == 0:
+        print('epoch: {}, loss: {}'.format(e+1, loss.data[0]))
 ```
 
  
@@ -91,9 +105,20 @@ net.load_state_dict(torch.load('path.pth'))
 
 ##  数据处理
 
-### 1. 数据加载
+### 1. 数据
 
-使用torch提供的工具类DataLoader定义一个数据迭代器，可以不用一次性将数据读入内存
+Pytorch一般使用Dataset的子类表示一个数据库，主要就是重写
+
+- def \_\_getitem\_\_(self, index)
+- def  \_\_len\_\_(self)
+
+两个方法
+
+### 2. 数据加载
+
+使用torch提供的工具类DataLoader定义一个数据迭代器，可以不用一次性将数据读入内存。
+
+需要的数据可以是Dataset，但实际上只要支持按位访问和获取长度的对象都可以，比如一个ndarray
 
 ```python
 from torch.utils.data import DataLoader
@@ -138,6 +163,8 @@ embeds = nn.Embedding(100,50) # 共100个单词，每个使用50个维度表示
 embeds.weight.data = torch.ones(100,50) # 载入下载的已经训练好的词嵌入矩阵
 single_word_embedding = embeds(torch.LongTensor([50])) # 取序号为50的单词的向量，注意这里需要的是一个封装了序号的LongTensor
 ```
+
+> 神经网络层中的参数是Parameter类型的，.data才是Tensor
 
 ## GPU加速
 

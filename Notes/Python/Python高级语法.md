@@ -1,4 +1,4 @@
-## Python函数的本质
+Python函数的本质
 
 在Python中，函数其实是一个对象
 
@@ -26,14 +26,14 @@ a()
 
 可以看出python中一切皆对象
 
-## 网络上常用的base64解码
+### 网络上常用的base64解码
 
 ```
 import base64
 img = base64.b64decode(img_src[23:])  # 前面是data:image/jpeg;base61,
 ```
 
-## with语法
+### with语法
 
 ```
 # 使用with()需要定义两个方法
@@ -44,7 +44,7 @@ class A():
         print("离开with时被调用")
 ```
 
-## Lambda表达式
+### Lambda表达式
 
 ```
 add = lambda x,y:x+y
@@ -67,10 +67,16 @@ sorted(dictionary.items(),key=lambda dictionary:dictionary[1])
 [(5, 3), (4, 3), (3, 5), (6, 6), (10, 6), (0, 6), (2, 9)]
 ```
 
-## Map函数
+### Map函数
 
 ```python
 list(map(lambda x:x*2,li))
 ```
 
 map()是 Python 内置的高阶函数，它接收一个函数 f 和一个 list，并通过把函数 f 依次作用在 list 的每个元素上，得到一个新的 list 并返回。
+
+### Sort和Sorted
+
+sort 是应用在 list 上的方法，sorted 可以对所有可迭代的对象进行排序操作。
+
+list 的 sort 方法返回的是对已经存在的列表进行操作，无返回值，而内建函数 sorted 方法返回的是一个新的 list，而不是在原来的基础上进行的操作。
