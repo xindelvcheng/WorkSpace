@@ -8,6 +8,7 @@
 
 - torch.randn(row,col,hi,...) 生成指定形状使用标准正态分布初始化的Tensor
 - torch.zeros(row,col,hi,...) 生成全为0的指定形状的Tensor
+- torch.tensor(data, dtype=None, device=None, requires_grad=False, pin_memory=False) -> Tensor这是一个方法，只能传数据，不存在重载之说。torch.Tensor()则有许多构造方法，可以放入列表作为数据也可以传几个数据作为形状。
 
 #### (2).变量类型
 
